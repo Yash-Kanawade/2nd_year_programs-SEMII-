@@ -1,0 +1,15 @@
+def remove_ele(c_set):
+	ele = int(input("Enter the element to be deleted:"))
+	c_set.remove(ele)
+
+def Intersection(set_A,set_B):
+	print("The Intersection of both sets is:",set_A.intersection(set_B))
+	
+def Union(set_A,set_B):
+	print("The Union of both sets is:",set_A.union(set_B))
+	
+def Difference(set_A,set_B):
+	print("The difference between sets is :",set_A.difference(set_B))
+	
+def subset(set_A,set_B):
+	print("Is this new set is subset of set_A:",set_A.issubset(set_B))
