@@ -1,70 +1,69 @@
-import set_Operation
-#from set_Operation import main
+from set_Operation import SetOperation 
+
 
 def create():
-	count = int(input("Enter the numberof elements you want to add in set:"))
-	set_i = set()
-	for i in range(count):
-		ele = int(input("Enter the element:"))
-		set_i.add(ele)
-	return set_i
+    count = int(input("Enter the number of elements you want to add to the set: "))
+    set_i = []
+    for i in range(count):
+        ele = int(input("Enter the element: "))
+        set_i.append(ele)
+    return set_i
 
-		
+set_ops = SetOperation()
+
 print("****MENU****")
 choice = 0
-set_A = set()
-set_B = set()
-while(choice != -1):
-	print("Enter 1 to create set_A")
-	print("Enter 2 to create set_B")
-	print("Enter 3 to remove element from set_A")
-	print("Enter 4 to remove element from set_B")
-	print("Enter 5 to get Union of both the sets")
-	print("Enter 6 to intersection of both sets")
-	print("Enter 7 to Display both the sets")
-	print("Enter 8 to print size of both the sets")
-	print("Enter 9 to print the difference between two sets")
-	print("Enter 10 to check subset")
-	print("Enter -1 to Exit")
-	
-	choice = int(input("Enter your choice : "))
-	if(choice == 1):
-		set_A = create()
-		print(set_A)
-	elif(choice == 2):
-		set_B = create()
-		print(set_B)
-	elif(choice == 3):
-		set_Operation.remove_ele(set_A)
-		print(set_A)
-	elif(choice == 4):
-		set_Operation.remove_ele(set_B)
-		print(set_B)
-	elif(choice == 5):
-		print("set_A is:",set_A)
-		print("set_B is:",set_B)
-		set_Operation.Union(set_A,set_B)
-	elif(choice == 6):
-		print("set_A is:",set_A)
-		print("set_B is:",set_B)
-		set_Operation.Intersection(set_A,set_B)
-	elif(choice == 7):
-		print("Both sets are as follow:")
-		print("set_A is:",set_A)
-		print("set_B is:",set_B)
-		set_Operation.Difference(set_A,set_B)
-	elif(choice == 8):
-		print("The size of set_A is :",len(set_A))
-		print("The size of set_B is :",len(set_B))
-		print("set_A is:",set_A)
-		print("set_B is:",set_B)
-	elif(choice == 9):
-		print("set_A is:",set_A)
-		print("set_B is:",set_B)
-	elif(choice == 10):
-		print("set_A is:",set_A)
-		print("set_B is:",set_B)
-		set_Operation.subset(set_A,set_B)
-	elif(choice != -1):
-		print("Please enter valid choice")
-				
+set_A = []
+set_B = []
+
+while choice != -1:
+    print("Enter 1 to create set_A")
+    print("Enter 2 to create set_B")
+    print("Enter 3 to remove element from set_A")
+    print("Enter 4 to remove element from set_B")
+    print("Enter 5 to get Union of both the sets")
+    print("Enter 6 to get Intersection of both sets")
+    print("Enter 7 to Display both the sets")
+    print("Enter 8 to print size of both the sets")
+    print("Enter 9 to print the difference between two sets")
+    print("Enter 10 to check if set_A is a subset of set_B")
+    print("Enter -1 to Exit")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        set_A = create()
+        print("set_A:", set_A)
+    elif choice == 2:
+        set_B = create()
+        print("set_B:", set_B)
+    elif choice == 3:
+        set_ops.remove_ele(set_A)
+        print("set_A:", set_A)
+    elif choice == 4:
+        set_ops.remove_ele(set_B)
+        print("set_B:", set_B)
+    elif choice == 5:
+        print("set_A:", set_A)
+        print("set_B:", set_B)
+        set_ops.union(set_A, set_B)
+    elif choice == 6:
+        print("set_A:", set_A)
+        print("set_B:", set_B)
+        set_ops.intersection(set_A, set_B)
+    elif choice == 7:
+        print("set_A:", set_A)
+        print("set_B:", set_B)
+    elif choice == 8:
+        print("The size of set_A is:", len(set_A))
+        print("The size of set_B is:", len(set_B))
+    elif choice == 9:
+        print("set_A:", set_A)
+        print("set_B:", set_B)
+        set_ops.difference(set_A, set_B)
+    elif choice == 10:
+        print("set_A:", set_A)
+        print("set_B:", set_B)
+        set_ops.subset(set_A, set_B)
+    elif choice != -1:
+        print("Please enter a valid choice.")
