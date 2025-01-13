@@ -1,15 +1,38 @@
-def remove_ele(c_set):
-	ele = int(input("Enter the element to be deleted:"))
-	c_set.remove(ele)
+class SetOperation:
+    def remove_ele(self, c_set):
+        try:
+            ele = int(input("Enter the element to be deleted: "))
+            c_set.remove(ele)
+            print(f"Element {ele} removed from the set.")
+        except ValueError:
+            print("Please enter a valid integer.")
+        except KeyError:
+            print(f"Element {ele} not found in the set.")
 
-def Intersection(set_A,set_B):
-	print("The Intersection of both sets is:",set_A.intersection(set_B))
-	
-def Union(set_A,set_B):
-	print("The Union of both sets is:",set_A.union(set_B))
-	
-def Difference(set_A,set_B):
-	print("The difference between sets is :",set_A.difference(set_B))
-	
-def subset(set_A,set_B):
-	print("Is this new set is subset of set_A:",set_A.issubset(set_B))
+    def intersection(self, set_A, set_B):
+        temp = []
+        for i in set_A:
+            if i in set_B:
+                temp.append(i)
+        print("Intersected elements are:",temp)
+
+    def union(self, set_A, set_B):
+        temp = set_A
+        for i in set_B:
+            if i not in temp:
+                temp.append(i)
+        print("Union elements are:",temp)
+
+    def difference(self, set_A, set_B):
+        temp = []
+        for i in set_A:
+            if i not in set_B:
+                temp.append(i)
+        print("The difference of both the set is:",temp)
+    def subset(self, set_A, set_B):
+        for i in set_A:
+            if i not in set_B:
+                print("Is subset :",False)
+                return
+        print("Is subset :",True)
+    
