@@ -10,7 +10,7 @@ def insert(ht,n):
     else:
         count = 0
         it = 1
-        while(ht[loc] != -1):
+        while(ht[loc] != -1 and ht[loc] != -99):
             count = count + 1
             loc = (loc + (it*it))%n
             it = it + 1
@@ -41,28 +41,37 @@ def search(ht,n):
     print("Element found at index",loc)
     display(ht)
 
-def delete(ht,n):
-    ele = int(input("Enter element to be deleted"))
-    loc = ele%n
-    if(ht[loc] == ele):
+def delete(ht, n):
+    ele = int(input("Enter element to be deleted: "))
+    loc = ele % n
+
+    if ht[loc] == ele:
         ht[loc] = -99
-        print("Element deleted at index:",loc)
+        print("Element deleted at index:", loc)
         display(ht)
         return
+    
     count = 0
-    while(ht[loc] != -1):
-        if(count == n):
+    it = 1
+    while ht[loc] != -1:
+        if ht[loc] == ele:
+            ht[loc] = -99
+            print("Element deleted at index:", loc)
+            display(ht)
+            return
+        
+        if count == n:
             print("Element to be deleted not found in Hashtable")
             display(ht)
             return
-        loc = (loc+1)%n
-        count = count + 1
         
-        if(ht[loc] == ele):
-            ht[loc] = -99
-            print("Element deleted at index:",loc)
-            display(ht)
-            return
+        loc = (loc + (it * it)) % n
+        it += 1
+        count += 1
+
+    print("Element to be deleted not found in Hashtable")
+    display(ht)
+
 
 def main():
     n = int(input("Enter the size of Hashtable :"))
