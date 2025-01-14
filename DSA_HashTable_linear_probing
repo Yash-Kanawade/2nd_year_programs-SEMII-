@@ -5,7 +5,7 @@ def display(ht):
 def insert(ht,n):
     ele = int(input("Enter the element:"))
     loc = ele%n
-    if(ht[loc] == -1):
+    if(ht[loc] == -1 or ht[loc] == -99):
         ht[loc] = ele
     else:
         count = 0
