@@ -9,7 +9,7 @@ def insert(ht,n):
         ht[loc] = ele
     else:
         count = 0
-        while ht[loc] != -1:
+        while ht[loc] != -1 and ht[loc] != -99:
             loc =(loc+1)%n
             count = count + 1
             if count == n:
