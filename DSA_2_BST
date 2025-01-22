@@ -1,0 +1,213 @@
+#include<iostream>
+using namespace std;
+
+class BST{
+
+    struct node{
+        int data;
+        node* left = NULL;
+        node* right = NULL;
+    };
+
+    node* root;
+
+    public:
+
+        BST()
+        {
+            root = NULL;
+        }
+
+        void create();
+        void display();
+        void display_preorder(node* root);
+        void display_postorder(node* root);
+        void display_inorder(node* root);
+        void max_Element();
+        void min_Element();
+        void search();
+        void help_search(node* root,int ele);
+
+};
+
+void BST::create()
+{
+    node* curr;
+    node* temp;
+    int ans = 1;
+    while(ans){
+        temp = new node();
+        cout<<"Enter the data: ";
+        cin>>temp->data;
+        if(root == NULL)
+            root = temp;
+        else
+        {
+            curr = root;
+            while(1){
+                if(curr->data >= temp->data)
+                {
+                    if(curr->left == NULL)
+                    {
+                        curr->left = temp;
+                        break;
+                    }
+                    curr = curr->left;
+                }
+                if(curr->data < temp->data)
+                {
+                    if(curr->right == NULL)
+                    {
+                        curr->right = temp;
+                        break;
+                    }
+                    curr = curr->right;
+                }
+            }
+        }
+        cout<<"One more node?"<<endl;
+        cin>>ans;
+    }
+}
+
+void BST::display_preorder(node* curr)
+{
+    if(curr != NULL)
+    {
+        cout<<curr->data<<"\t";
+        display_preorder(curr->left);
+        display_preorder(curr->right);
+    }
+}
+
+void BST::display_inorder(node* curr)
+{
+    if(curr != NULL)
+    {
+        display_inorder(curr->left);
+        cout<<curr->data<<"\t";
+        display_inorder(curr->right);
+    }
+}
+
+void BST::display_postorder(node* curr)
+{
+    if(curr != NULL)
+    {
+        display_postorder(curr->left);
+        display_postorder(curr->right);
+        cout<<curr->data<<"\t";
+    }
+}
+
+void BST::display()
+{
+    cout<<"***Display MENU***"<<endl;
+    cout<<"1: Preorder Display"<<endl;
+    cout<<"2: Inorder Display"<<endl;
+    cout<<"3: Postorder Display"<<endl;
+
+    int choice;
+    cout<<"Enter your choice :";
+    cin>>choice;
+    cout<<endl;
+    switch (choice)
+    {
+    case 1 : display_preorder(root);
+        break;
+    case 2 : display_inorder(root);
+        break;
+    case 3 : display_postorder(root);
+        break;
+    default : cout<<"Please enter correct choice!!!!!! "<<endl;
+    }
+    
+}
+
+void BST::max_Element(){
+    node* temp = root;
+    while(temp->right != NULL)
+    {
+        temp = temp->right;
+    }
+    cout<<"Maximum Element in BST is :"<<temp->data<<endl;
+}
+
+void BST::min_Element(){
+    node* temp = root;
+    while(temp->left != NULL)
+    {
+        temp = temp->left;
+    }
+    cout<<"Minimum Element in BST is :"<<temp->data<<endl;
+}
+
+void BST::search()
+{
+    cout<<"Enter element to be search:";
+    int ele;
+    cin>>ele;
+    help_search(root,ele);
+}
+
+void BST::help_search(node* curr,int ele)
+{
+    if(curr == NULL)
+    {
+        cout<<"Element notr found"<<endl;
+        return;
+    }
+    if(curr->data == ele)
+    {
+        cout<<"Element found"<<endl;
+        return;
+    }
+    if(curr->data > ele)
+    {
+        help_search(curr->left,ele);
+    }
+    else
+    {
+        help_search(curr->right,ele);
+    }
+    
+
+}
+
+int main()
+{
+    BST obj;
+    int exit = 1; 
+
+    while(exit)
+    {
+        cout<<"****MENU****"<<endl;
+        cout<<"1 : create"<<endl;
+        cout<<"2 : Display"<<endl;
+        cout<<"3 : Max element"<<endl;
+        cout<<"4 : Min element"<<endl;
+        cout<<"5 : search"<<endl;
+
+        int choice;
+        cout<<"Enter your choice:";
+        cin>>choice;
+        switch (choice)
+        {
+            case 1 : obj.create();
+                break;
+            case 2 : obj.display();
+                break;
+            case 3 : obj.max_Element();
+                break;
+            case 4 : obj.min_Element();
+                break;
+            case 5 : obj.search();
+                break;
+        }
+        cout<<"enter 0 to exit"<<endl;
+        cin>>exit;
+    }
+    
+    
+    return 0;
+}
