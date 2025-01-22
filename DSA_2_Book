@@ -66,7 +66,24 @@ void GT::display()
 int main()
 {
     GT obj;
-    obj.create();
-    obj.display();
+    int exit = 1;
+    do{ 
+        cout<<"****Menu****"<<endl;
+        cout<<"1 : create"<<endl;
+        cout<<"2 : display"<<endl;
+
+        int choice ;
+        cout<<"Enter your choice: ";
+        cin>>choice;
+        switch(choice)
+        {
+            case 1 : obj.create();
+                break;
+            case 2 : obj.display();
+                break;
+        }
+        cout<<"Enter 0 to exit ";
+        cin>>exit;
+    }while(exit);
     return 0;
 }
