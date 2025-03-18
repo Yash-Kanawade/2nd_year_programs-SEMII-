@@ -1,0 +1,79 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+
+class Prism{
+    private:
+        int n;
+        int graph[10][10];
+    public:
+        void create();
+        void display();
+        void prism();
+};
+
+void Prism::create(){
+    cout<<"Enter total number of vertices:";
+    cin>>n;
+    int i , j;
+    for(int k = 0 ; k < n ;k++){
+        cout<<"Select edge: ";
+        cin >>i >> j;
+        cout<<"Enter the edge weight:";
+        cin>>graph[i][j];
+    }
+}
+
+void Prism::display(){
+    for(int i = 0 ; i < n ;i++){
+        for(int j = 0 ; j < n ;j++){
+            cout<<graph[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
+
+void Prism::prism(){
+    int visited[n] = {0};
+    int min = 999;
+    int sv , ev, tmin = 0;
+    for(int k = 0 ; k < n ;k++)
+    {
+    for(int i = 0 ; i < n ; i++)
+    {
+        int flag = 0;
+        if(visited[i] != 1)
+            visited[i] = 1;
+        min = 999;
+        for(int j = 0 ; j < n ; j++)
+        {
+            if(i != j && visited[i] == 1 && visited[j] != 1 && graph[i][j] != 0)
+            {
+                if(graph[i][j]<min)
+                {
+                    min = graph[i][j];
+                    sv = i;
+                    ev = j;
+                    flag = 1;
+                }
+            }
+        }
+        if(flag == 1)
+        {
+            tmin = tmin + min;
+            cout<<"The minimum weight edge of "<<sv<<" and "<<ev<<" is of weight = "<<min<<endl;
+        }
+        
+    }
+}
+ cout<<"Total minimum weight of graph is: "<<tmin<<endl;
+}
+
+int main(){
+    Prism p;
+    p.create();
+    p.display();
+    p.prism();
+    return 0;
+}
