@@ -1,0 +1,144 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+class studentInfo{
+    private:
+        string filename;
+        struct Student{
+            int rn;
+            string name;
+        }s;
+    public:
+        void create();
+        void display();
+        void search();
+        void Delete();
+};
+
+void studentInfo::create(){
+    ofstream out;
+    filename = "file.txt";
+    out.open(filename,ios::binary|ios::out);
+    int flag = 1;
+    while(flag == 1){
+        cout<<"Enter the record to be inserted:-"<<endl;
+        cout<<"Enter name of Student:";
+        cin>>s.name;
+        cout<<endl;
+        cout<<"Enter Roll no. of Student:"<<endl;
+        cin>>s.rn;
+        cout<<endl;
+        cout<<"Do you want to insert more data ? "<<endl<<"If Yes enter 1" <<endl<<"If No enter 0"<<endl;
+        cin>>flag;
+        out.write((char*)&s,sizeof(s));
+    }
+    cout<<"Succesfully inserted data in the file"<<endl;
+    out.close();
+}
+
+
+void studentInfo::display(){
+    ifstream in;
+    in.open(filename,ios::binary|ios::in);
+    cout<<"The student record is Display as follow:"<<endl<<endl;
+
+    while(in.read((char*)&s,sizeof(s))){
+        cout<<"Student Name:"<<s.name<<endl;
+        cout<<"Student Roll no:"<<s.rn<<endl;
+        cout<<endl;
+    }
+
+    cout<<"Data displayed succesfully"<<endl;
+    in.close();
+}
+
+void studentInfo::search(){
+    ifstream in;
+    in.open(filename,ios::binary|ios::in);
+    cout<<"Enter the Roll No. of student to be search:"<<endl;
+    int temprn;
+    cin>>temprn;
+    cout<<endl;
+
+    while(in.read((char*)&s,sizeof(s))){
+        if(s.rn == temprn){
+            cout<<"Student record found:"<<endl<<endl;
+            cout<<"Student Name:"<<s.name<<endl;
+            cout<<"Student Roll no:"<<s.rn<<endl;
+            cout<<endl;
+            in.close();
+            return;
+        }
+    }
+
+    cout<<"Data for given Roll No is Not Found"<<endl;
+    in.close();
+}
+
+void studentInfo::Delete(){
+    ifstream file;
+    file.open(filename,ios::binary|ios::in);
+    cout<<"Enter the Roll No. of student to be Deleted:"<<endl;
+    int temprn;
+    cin>>temprn;
+    cout<<endl;
+
+    string newfile;
+    cout<<"Enter new file name:";
+    cin>>newfile;
+    ofstream file2;
+    file2.open(newfile,ios::binary|ios::out);
+    bool flag = false;
+
+    while(file.read((char*)&s,sizeof(s))){
+        if(s.rn != temprn){
+            file2.write((char*)&s,sizeof(s));
+        }
+        else
+            flag = true;
+    }
+    file.close();
+    file2.close();
+    remove(filename.c_str());
+    filename = newfile;
+    if(flag == true)
+    cout<<"Deletion is Done succesfully"<<endl;
+    else
+    cout<<"Error in deletion"<<endl;
+}
+
+int main(){
+    studentInfo std;
+    int choice = 1;
+    while(choice){
+        cout<<"****MENU****"<<endl;
+        cout<<"1:CREATE"<<endl;
+        cout<<"2:DISPLAY"<<endl;
+        cout<<"3:SEARCH"<<endl;
+        cout<<"4:DELETE"<<endl;
+        cout<<"Enter 0 to Exit"<<endl;
+        cout<<"Enter your choice:";
+        cin>>choice;
+        cout<<endl;
+        switch (choice)
+        {
+        case 1: 
+            std.create();
+            break;
+        case 2:
+            std.display();
+            break;
+        case 3:
+            std.search();
+            break;
+        case 4:
+            std.Delete();
+            break;
+        default:
+            break;
+        }
+    }
+    cout<<"Exit the program succesfully"<<endl;
+    return 0;
+}
