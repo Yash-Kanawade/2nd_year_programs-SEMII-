@@ -1,0 +1,267 @@
+#include<iostream>
+using namespace std;
+
+struct node{
+    int data;
+    node* left = NULL;
+    node* right = NULL;
+};
+
+
+class BST
+{
+    public:
+        node* root = NULL;
+        void Create();
+        void Preorder_Display(node*);
+        void Inorder_Display(node *curr);
+        void Postorder_Display(node *curr);
+        int Longest_path(node*);
+        void Insert_NewNode();
+        void Min_Data();
+        void Search();
+        void Mirror(node*);
+};
+
+void BST::Create()
+{
+    int flag = 1;
+    while(flag)
+    {
+        node * newnode = new node;
+        cout<<"Enter the value of Newnode:";
+        cin>>newnode->data;
+        if(root == NULL)
+            root = newnode;
+        else
+        {
+            node* curr = root;
+            while(true){
+                if(newnode ->data < curr->data)
+                {
+                    if( curr->left == NULL)
+                    {
+                        curr->left = newnode;
+                        break;
+                    }
+                    else
+                        curr = curr->left;
+                }
+                if(newnode ->data > curr ->data)                  
+                {
+                    if(curr->right == NULL)
+                    {
+                        curr->right = newnode;
+                        break;
+                    }
+                    else
+                        curr = curr->right;
+                }
+            }
+        }
+        cout<<"Node added successfully"<<endl;
+        cout<<"Want to Enter another element ??? If yes Enter 1 to procced or if no Enter 0:";
+        cin>>flag;
+    }
+    cout<<"Finished Creation of Binary Search Tree!!!!!"<<endl;
+}
+
+void BST::Preorder_Display(node* curr)
+{
+    if(curr){
+        cout<<curr->data<<"->";
+        Preorder_Display(curr->left);
+        Preorder_Display(curr->right);
+    }
+}
+
+void BST::Inorder_Display(node* curr){
+    if(curr){
+        Inorder_Display(curr->left);
+        cout<<curr->data<<"->";
+        Inorder_Display(curr->right);
+    }
+}
+
+void BST::Postorder_Display(node* curr){
+    if(curr){
+        Postorder_Display(curr->left);
+        Postorder_Display(curr->right);
+        cout<<curr->data<<"->";
+    }
+}
+
+int BST::Longest_path(node* root)
+{
+    if(root != NULL)
+    {
+        int left = Longest_path(root->left);
+        int right = Longest_path(root->right);
+        if(left > right){
+            return left + 1;
+        }
+        else{
+            return right + 1;
+        }
+    }
+    else{
+        return 0;
+    }
+}
+
+void BST::Insert_NewNode()
+{
+    if(root == NULL)
+    {
+        cout<<"Root is NULL"<<endl;
+        return;
+    }
+    cout<<"Enter the node value to be inserted:";
+    node* newnode = new node();
+    node* curr = root;
+    cin>>newnode->data;
+    while(true)
+    {
+        if(curr->data > newnode->data)
+        {
+            if(curr->left == NULL)
+            {
+                curr->left = newnode;
+                break;
+            }
+            curr = curr->left;
+        }
+        else
+        {
+            if(curr->right == NULL)
+            {
+                curr->right = newnode;
+                break;
+            }
+            curr = curr->right;
+        }
+    }
+    cout<<"Node inserted succesfully!!!!!!!!"<<endl;
+}
+
+void BST::Min_Data()
+{
+    node* curr = root;
+    while(curr->left != NULL)
+    {
+        curr = curr->left;
+    }
+    cout<<"Minimun value node in tree is :"<<curr->data<<endl;
+}
+
+void BST::Search(){
+    node* curr = root;
+    if(root == NULL)
+    {
+        cout<<"Root is NULL"<<endl;
+        return;
+    }
+    cout<<"Enter data to be search";
+    int s;
+    cin>>s;
+    while(true){
+        if(curr == NULL)
+        {
+            cout<<"Data not found"<<endl;
+            break;
+        }
+        if(curr->data > s)
+        {
+            curr = curr->left;
+        }
+        else if(curr->data < s)
+        {
+            curr = curr->right;
+        }
+        else
+        {
+            cout<<"Data Found!!"<<endl;
+            break;
+        }
+    }
+}
+
+
+void BST::Mirror(node* curr){
+    if(curr != NULL)
+    {
+        node* temp = curr->left;
+        curr->left = curr->right;
+        curr->right = temp;
+
+        Mirror(curr->left);
+        Mirror(curr->right);
+    }
+    else
+        return;
+}
+
+
+int main()
+{
+    int choice;
+    BST obj;
+    do{
+        cout<<"****MENU****"<<endl;
+        cout<<"1 : Create Tree"<<endl;
+        cout<<"2 : Preorder Display"<<endl;
+        cout<<"3 : Inorder Display"<<endl;
+        cout<<"4 : Postorder Display"<<endl;
+        cout<<"5 : Number of nodes in longest path"<<endl;
+        cout<<"6 : Minimum value in tree"<<endl;
+        cout<<"7 : To search an element in tree"<<endl;
+        cout<<"8 : Mirror a Tree"<<endl;
+        cout<<"9 : Insert a newnode"<<endl;
+
+        cout<<"Enter 0 to exit"<<endl;
+        cout<<"Enter your choice!!!:";
+        cin>>choice;
+        cout<<endl;
+
+        switch (choice)
+        {
+            case 1 : obj.Create();
+                break;
+            
+            case 2 : obj.Preorder_Display(obj.root);
+                cout<<endl;
+                break;
+
+            case 3 : obj.Inorder_Display(obj.root);
+                cout<<endl;
+                break;    
+            
+            case 4 : obj.Postorder_Display(obj.root);
+                cout<<endl;
+                break;
+
+            case 5 : cout<<"Number of node in Longest Path are :"<<obj.Longest_path(obj.root);
+                cout<<endl;
+                break;
+            
+            case 6 : obj.Min_Data();
+                cout<<endl;
+                break;
+            
+            case 7 : obj.Search();
+                cout<<endl;
+                break;
+
+            case 8 : obj.Mirror(obj.root);
+                cout<<endl;
+                break;
+
+            case 9:obj.Insert_NewNode();
+                cout<<endl;
+                break;
+        }
+    }while(choice);
+    cout<<"Program EXIT successfully!!";
+
+    return 0;
+}
