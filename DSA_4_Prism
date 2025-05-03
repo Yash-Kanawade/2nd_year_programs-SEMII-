@@ -1,79 +1,94 @@
 #include<iostream>
-#include<vector>
+#define INT_MAX 999
 using namespace std;
 
-
 class Prism{
-    private:
-        int n;
-        int graph[10][10];
+    int n;
+    int graph[10][10];
     public:
         void create();
         void display();
         void prism();
 };
 
+
 void Prism::create(){
-    cout<<"Enter total number of vertices:";
+    cout<<"Enter Total Numbers Of Vertices:";
     cin>>n;
-    int i , j;
-    for(int k = 0 ; k < n ;k++){
-        cout<<"Select edge: ";
-        cin >>i >> j;
-        cout<<"Enter the edge weight:";
-        cin>>graph[i][j];
+    for(int i = 0 ; i < n;i++)
+    {
+        for(int j = 0 ; j < n;j++)
+        {
+            graph[i][j] = 0;
+        }
+    }
+
+    int egdes;
+    cout<<"Enter total number of edges:";
+    cin>>egdes;
+    int i , j , weight;
+    for(int k = 0 ; k < egdes ;k++){
+        cout<<"Enter the egde(u v) and weight:";
+        cin>>i>>j>>weight;
+        graph[i][j] = weight;
+        graph[j][i] = weight;
     }
 }
 
+
 void Prism::display(){
-    for(int i = 0 ; i < n ;i++){
-        for(int j = 0 ; j < n ;j++){
+    cout<<"Adjacency matrix is as follows:";
+    for(int i = 0; i < n ;i++)
+    {
+        for(int j = 0; j < n;j++)
+        {
             cout<<graph[i][j]<<" ";
         }
         cout<<endl;
     }
 }
 
+
 void Prism::prism(){
     int visited[n] = {0};
-    int min = 999;
-    int sv , ev, tmin = 0;
-    for(int k = 0 ; k < n ;k++)
-    {
-    for(int i = 0 ; i < n ; i++)
-    {
-        int flag = 0;
-        if(visited[i] != 1)
-            visited[i] = 1;
-        min = 999;
-        for(int j = 0 ; j < n ; j++)
+    int edges = 0,TotalCost = 0;
+    visited[0] = 1;
+    while(edges < n-1){
+        int min = INT_MAX ;
+        int u = -1 , v = -1;
+        for(int i = 0 ; i < n; i++)
         {
-            if(i != j && visited[i] == 1 && visited[j] != 1 && graph[i][j] != 0)
+            if(visited[i])
             {
-                if(graph[i][j]<min)
+            for(int j = 0 ; j < n ; j++)
+            {
+                if(!visited[j] && graph[i][j] != 0)
                 {
-                    min = graph[i][j];
-                    sv = i;
-                    ev = j;
-                    flag = 1;
+                    if(min > graph[i][j])
+                    {
+                        min = graph[i][j];
+                        u = i;
+                        v = j;
+                    }
                 }
             }
         }
-        if(flag == 1)
-        {
-            tmin = tmin + min;
-            cout<<"The minimum weight edge of "<<sv<<" and "<<ev<<" is of weight = "<<min<<endl;
         }
-        
+        if(u != -1 and v != -1){
+            cout<<u<<"-"<<v<<":"<<min<<endl;
+            TotalCost = TotalCost + min;
+            visited[v] = 1;
+            edges++;
+        }
     }
-}
- cout<<"Total minimum weight of graph is: "<<tmin<<endl;
+    cout<<"Total minimum cost:"<<TotalCost<<endl;
 }
 
-int main(){
-    Prism p;
-    p.create();
-    p.display();
-    p.prism();
+int main()
+{
+    Prism obj;
+    obj.create();
+    obj.display();
+    obj.prism();
     return 0;
 }
