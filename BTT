@@ -1,0 +1,124 @@
+#include<iostream>
+using namespace std;
+
+class BTT{
+    public:
+    struct node{
+        int data;
+        int lf = 0;
+        int rf = 0;
+        node* left;
+        node* right;
+    };
+
+    node* root;
+    node* header;
+
+    BTT(){
+        root = NULL;
+        header = new node;
+        header->left = header;
+        header->right = header;
+    }
+
+    void create();
+    void preorder();
+    void inorder();
+};
+
+void BTT::inorder(){
+    if(root == NULL){
+        cout<<"Tree is empty!"<<endl;
+        return;
+    }
+    node* temp = root;
+    while(temp->lf == 1)
+        temp = temp->left;
+    while(temp != header){
+        cout<<temp->data<<"->";
+        if(temp->rf == 0)
+            temp= temp->right;
+        else{
+            temp = temp->right;
+            while(temp != header && temp->lf == 1){
+                temp = temp->left;
+            }
+        }
+    }
+}
+
+void BTT::preorder(){
+    if(root == NULL){
+        cout<<"Tree is empty!!"<<endl;
+        return;
+    }
+    node* temp = root;
+    while(temp != header){
+        cout<<temp->data<<"->";
+        if(temp->lf == 1){
+            temp = temp ->left;
+        }
+        else{
+            while(temp->rf == 0){
+                temp = temp->right;
+                if(temp == header)
+                    break;
+            }
+            temp = temp->right;
+        }
+    }
+}
+
+void BTT::create(){
+    int loop;
+    do{
+    node* newnode = new node();
+    cout<<"Enter the data of node:";
+    cin>>newnode->data;
+
+    if(root == NULL){
+        root = newnode;
+        root->left = header;
+        root->right = header;
+    }
+    else{
+        node* curr = root;
+        while(true){
+            if(newnode->data < curr->data){
+                if(curr->lf == 0){
+                    newnode->left = curr->left;
+                    curr->left = newnode;
+                    curr->lf = 1;
+                    newnode->right = curr;
+                    break;
+                }
+                curr = curr->left;
+            }
+            else if(newnode->data > curr->data){
+                if(curr->rf == 0){
+                    newnode->right = curr->right;
+                    curr->right = newnode;
+                    newnode->left = curr;
+                    curr->rf = 1;
+                    break;
+                }
+                curr = curr->right;
+            }
+        }
+    }
+    cout<<"Do you want to add another node , if yes enter 1 and if no enter 0:"<<endl;
+    cin>>loop;
+}while(loop);
+}
+
+
+
+
+int main(){
+    BTT obj;
+    obj.create();
+    obj.preorder();
+    cout<<endl;
+    obj.inorder();
+
+}
