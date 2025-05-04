@@ -1,89 +1,82 @@
 #include<iostream>
 using namespace std;
-#include<string>
 
-class GT
-{
+class Book{
+    public:
     struct node{
         int count;
         node* child[10];
         string name;
-    }*root;
+    };
 
-    public :
+    node* root;
 
-    GT(){
+    Book(){
         root = NULL;
     }
+
     void create();
     void display();
-
 };
 
-void GT::create(){
+void Book::create(){
     root = new node();
-    cout<<"\nEnter the the Book Title"<<endl;
+
+    cout<<"Enter the name of Book:";
     cin>>root->name;
-    cout<<"\nEnter total number of chapters in the book:";
+    cout<<"Enter total number chapters the book include:";
     cin>>root->count;
-    for(int i = 0 ; i < root->count ; i++)
-    {
+
+    cout<<"Enter the names of Chapters:-"<<endl;;
+
+    for(int i = 0 ; i < root->count;i++){
         node* newchapter = new node();
-        cout<<"\nEnter name of chapter "<<i+1<<" :";
+        cout<<"Enter Chapter "<<i+1<<" :";
         cin>>newchapter->name;
-        cout<<"\nEnter total number of section in chapter:";
-        cin>>newchapter->count;
         root->child[i] = newchapter;
-        for(int j = 0 ; j < newchapter->count; j++)
+        cout<<"Enter Total section inside the Chapters:";
+        cin>>newchapter->count;
+        for(int j = 0 ; j < newchapter->count;j++)
         {
             node* newsection = new node();
-            cout<<"\nEnter the name of section "<<j+1<<" :";
+            cout<<"Enter the name of section "<<j+1<<":";
             cin>>newsection->name;
             newchapter->child[j] = newsection;
+            cout<<"Enter total number of subsection in this particular section:";
+            cin>>newsection->count;
+            for(int k = 0 ; k < newsection->count ; k++)
+            {
+                node* subsection = new node();
+                cout<<"Enter the name of subsection:"<< k+1 <<":";
+                cin>>subsection->name;
+                newsection->child[k] = subsection;
+            }
+            cout<<endl;
         }
+        cout<<endl;
     }
 }
 
-void GT::display()
-{
-    node* temp = root;
-   
-    cout<<"\nThe name of book is:"<<temp->name<<endl;
-    cout<<"    The total chapter are :"<<temp->count<<endl;
-    for(int i = 0 ; i < temp->count ; i++)
-    {
-        cout<<"        Chapter "<<i+1<<" : "<<temp->child[i]->name<<endl;
-        cout<<"            The total section in chapters are:"<<temp->child[i]->count<<endl;
-        for(int j = 0 ; j < temp->child[i]->count ;j++)
-        {
-            cout<<"                Section "<< j+1 <<" :"<< temp->child[i]->child[j]->name<<endl;
+void Book::display(){
+    cout<<"The Details of the book are as follows:-"<<endl;
+    cout<<"The Name of the Book is :"<<root->name<<endl;
+    for(int i = 0 ; i < root->count;i++){
+        cout<<" The Chapter "<<i+1<<" is:"<<root->child[i]->name<<endl;
+        for(int j = 0 ; j < root->child[i]->count;j++){
+            cout<<"     The section "<<j+1<<" is :"<<root->child[i]->child[j]->name<<endl;
+            for(int k = 0 ; k < root->child[i]->child[j]->count;k++){
+                cout<<"         The subsection "<<k+1<<" is :"<<root->child[i]->child[j]->child[k]->name<<endl;
+            }
+            cout<<endl;
         }
+        cout<<endl;
     }
 }
-
-
 
 int main()
 {
-    GT obj;
-    int exit = 1;
-    do{ 
-        cout<<"****Menu****"<<endl;
-        cout<<"1 : create"<<endl;
-        cout<<"2 : display"<<endl;
-
-        int choice ;
-        cout<<"Enter your choice: ";
-        cin>>choice;
-        switch(choice)
-        {
-            case 1 : obj.create();
-                break;
-            case 2 : obj.display();
-                break;
-        }
-        cout<<"Enter 0 to exit ";
-        cin>>exit;
-    }while(exit);
+    Book obj;
+    obj.create();
+    obj.display();
     return 0;
 }
